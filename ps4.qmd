@@ -122,22 +122,37 @@ print(df.head())
   2.	Define start_date = first day of (year, month).
 	
   3.	If RUN_SCRAPER == False:
+
 	•	Read enforcement_actions_year_month.csv from disk.
+
 	•	Return the dataframe (so knitting is fast).
 	
   4.	Else (RUN_SCRAPER == True):
+
 	•	Initialize empty list rows and set page_num = 0.
+
 	•	Use a while-loop (not a simple for-loop), because we don’t know ahead of time how many pages we must crawl to reach start_date.
+
 	•	While True:
+
 	  •	Request the current page HTML (first page has no ?page=...; later pages use ?page=...).
+
 	  •	Parse enforcement actions on that page into structured rows (title/date/category/link).
+
 	  •	If no actions are found, break.
+
 	  •	Convert action dates to datetime.
+
 	  •	Append rows that are >= start_date.
+
 	  •	If the oldest date on this page is < start_date, we have gone far enough → break.
+
 	  •	Increment page_num and sleep(1) before requesting the next page.
+
 	•	Combine all collected rows into a dataframe, drop duplicates by link.
+
 	•	Save as enforcement_actions_year_month.csv (do not git commit).
+    
 	•	Return dataframe.
 
 
